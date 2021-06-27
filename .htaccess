@@ -1,0 +1,19 @@
+RewriteEngine on
+RewriteCond $1 !^(index\.php|resources|robots\.txt)
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^(.*)$ index.php/$1 [L,QSA]
+SetEnvIf Authorization "(.*)" HTTP_AUTHORIZATION=$1
+
+Options -Indexes
+
+RewriteCond %{HTTP:Authorization} ^(.*)
+RewriteRule .* - [e=HTTP_AUTHORIZATION:%1]
+
+# force ssl
+#RewriteCond     %{SERVER_PORT} ^80$
+#RewriteRule     ^(.*)$ https://%{SERVER_NAME}%{REQUEST_URI} [L,R]
+
+redirectMatch 301 /refer https://play.google.com/store/apps/details?id=app.gue.app
+
+redirectMatch 301 /itemdetail https://play.google.com/store/apps/details?id=app.gue.app
